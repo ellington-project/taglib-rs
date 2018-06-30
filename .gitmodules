@@ -1,0 +1,3 @@
+[submodule "taglib-sys/taglib"]
+	path = taglib-sys/taglib
+	url = git@github.com:AdamHarries/taglib.git
