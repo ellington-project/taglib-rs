@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["Adam Harries <harries.adam@gmail.com>"]
 
 [dependencies]
+taglib-sys = {path = "taglib-sys", version = "0.1.0"}
+libc = "0.2"

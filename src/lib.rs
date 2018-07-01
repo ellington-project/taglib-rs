@@ -1,7 +1,8 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+extern crate libc;
+extern crate taglib_sys;
+
+pub mod taglib_file;
+pub mod taglib_tag;
+
+pub fn taglib_init() { 
 }
