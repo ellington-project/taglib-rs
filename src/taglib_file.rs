@@ -42,6 +42,7 @@ impl TagLibFile {
         };
         unsafe {
             // start off by setting the string management options 
+            // this does mean that we need to manually free all the strings that get returned to us, however.
             taglib_set_string_management_enabled(false as i32);
             // try to open the file using the ffi
             let file_ptr = taglib_file_new(cs_filename.as_ptr());

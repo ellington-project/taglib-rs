@@ -3,6 +3,3 @@ extern crate taglib_sys;
 
 pub mod taglib_file;
 pub mod taglib_tag;
-
-pub fn taglib_init() { 
-}
