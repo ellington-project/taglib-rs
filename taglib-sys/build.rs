@@ -15,13 +15,17 @@ fn main() {
 
     // tell cargo to look for it when trying to link
     println!("cargo:rustc-link-search={}/lib", dst.display());
-    // and tell cargo to link the static library that it finds there! 
-    // note, we want to do this to avoid linking in the system tag_c, which might not have bpm support
-    println!("cargo:rustc-link-lib=static=tag_c");
-    // link libc++, as the static linker doesn't, and we need it for the tag internals
+       // link libc++, as the static linker doesn't, and we need it for the tag internals
     // println!("cargo:rustc-link-lib=c++");
     // println!("cargo:rustc-flags=-l dylib=stdc++");
     println!("cargo:rustc-link-lib=stdc++");
+    // and tell cargo to link the static library that it finds there! 
+    // note, we want to do this to avoid linking in the system tag_c, which might not have bpm support
+    
+    println!("cargo:rustc-link-lib=static=tag_c");
+    // println!("cargo:rustc-link-lib=static=tag");
+
+ 
 
 
     // create bindings for the static c library
