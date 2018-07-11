@@ -18,12 +18,12 @@ fn main() {
        // link libc++, as the static linker doesn't, and we need it for the tag internals
     // println!("cargo:rustc-link-lib=c++");
     // println!("cargo:rustc-flags=-l dylib=stdc++");
-    println!("cargo:rustc-link-lib=stdc++");
+    // println!("cargo:rustc-link-lib=stdc++");
     // and tell cargo to link the static library that it finds there! 
     // note, we want to do this to avoid linking in the system tag_c, which might not have bpm support
     
-    println!("cargo:rustc-link-lib=static=tag_c");
-    // println!("cargo:rustc-link-lib=static=tag");
+    // println!("cargo:rustc-link-lib=static=tag_c");
+    println!("cargo:rustc-flags=-l tag_c -l tag");
 
  
 
