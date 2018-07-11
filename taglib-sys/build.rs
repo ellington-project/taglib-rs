@@ -1,12 +1,14 @@
 extern crate bindgen;
 extern crate cmake;
 
+use cmake::Config;
+
 use std::env;
 use std::path::PathBuf;
 
 fn main() { 
     // tell cargo to build our taglib branch
-    let dst = cmake::new("taglib")
+    let dst = Config::new("taglib")
         .define("BUILD_SHARED_LIBS", "OFF")
         .define("ENABLE_STATIC_RUNTIME", "ON")
         .build();
