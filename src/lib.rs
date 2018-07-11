@@ -21,6 +21,7 @@ pub struct TagLibFile {
 }
 
 /* Various kinds of errors that we can get from using a file */
+#[derive(Debug)]
 pub enum FileError {
     OpenFailure,
     SaveFailure,
