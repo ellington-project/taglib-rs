@@ -2,7 +2,15 @@
 name = "taglib-sys"
 version = "0.1.0"
 authors = ["Adam Harries <harries.adam@gmail.com>"]
+links = "tag_c"
 build="build.rs"
+
+[lib]
+name = "taglib_sys"
+path = "src/lib.rs"
+
+[dependencies]
+libc = "0.2"
 
 [build-dependencies]
 bindgen = "0.37.0"
