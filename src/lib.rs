@@ -33,7 +33,7 @@ pub enum FileError {
 impl TagLibFile {
 
     /* Open a file with tag information */
-    pub fn new(filename: PathBuf) -> Result<TagLibFile, FileError> {
+    pub fn new(filename: &PathBuf) -> Result<TagLibFile, FileError> {
         // get the filename as a string, then a c string
         let str_filename = match filename.to_str() {
             Some(s) => s,
