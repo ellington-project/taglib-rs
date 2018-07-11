@@ -6,7 +6,9 @@ use std::path::PathBuf;
 
 fn main() { 
     // tell cargo to build our taglib branch
-    let dst = cmake::build("taglib");
+    let dst = cmake::build("taglib")
+        .define("BUILD_SHARED_LIBS", "OFF")
+        .define("ENABLE_STATIC_RUNTIME", "ON");
 
     // tell cargo to look for it when trying to link
     println!("cargo:rustc-link-search={}/lib", dst.display());
