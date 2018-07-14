@@ -33,16 +33,16 @@ pub enum FileError {
 impl TagLibFile {
 
     /* Open a file with tag information */
-    pub fn new(filename: &PathBuf) -> Result<TagLibFile, FileError> {
+    pub fn new<P: Into<PathBuf>>(filename: P) -> Result<TagLibFile, FileError> {
         // get the filename as a string, then a c string
-        let str_filename = match filename.to_str() {
-            Some(s) => s,
-            None => return Err(FileError::PathAsString),
-        };
-        let cs_filename = match CString::new(str_filename) {
-            Ok(cs) => cs,
-            Err(ne) => return Err(FileError::NullPathString(ne)),
-        };
+        let cs_filename = filename
+            .into()
+            .to_str()
+            .ok_or(FileError::PathAsString)
+            .and_then(|filename| {
+                CString::new(filename).map_err(|err| FileError::NullPathString(err))
+            })?;
+
         unsafe {
             // start off by setting the string management options 
             // this does mean that we need to manually free all the strings that get returned to us, however.
