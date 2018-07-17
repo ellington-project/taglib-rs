@@ -7,9 +7,6 @@ authors = ["Adam Harries <harries.adam@gmail.com>"]
 name = "taglib"
 path = "src/lib.rs"
 
-[dependencies.taglib-sys]
-path = "taglib-sys"
-version = "0.1.0"
-
 [dependencies]
 libc = "0.2"
+taglib-sys = {path = "taglib-sys"}

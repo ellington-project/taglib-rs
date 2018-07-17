@@ -88,7 +88,6 @@ impl TagLibFile {
 
 impl Drop for TagLibFile {
     fn drop(&mut self) {
-        println!("Dropping!");
         // free the taglib file!
         unsafe {
             taglib_file_free(self.file_handle);
