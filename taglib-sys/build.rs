@@ -11,6 +11,7 @@ fn main() {
     let dst = Config::new("taglib")
         .define("BUILD_SHARED_LIBS", "OFF")
         .define("ENABLE_STATIC_RUNTIME", "ON")
+        .define("CMAKE_C_FLAGS","-fPIC -Wall -O3")
         .build();
 
     // tell cargo to look for it when trying to link
