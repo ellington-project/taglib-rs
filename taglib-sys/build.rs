@@ -20,12 +20,9 @@ fn main() {
     // and tell cargo to link the static library that it finds there! 
     // note, we want to do this to avoid linking in the system tag_c, which might not have bpm support
     println!("cargo:rustc-flags=-l dylib=stdc++");
-    // println!("cargo:rustc-link-lib=static=z");
-
     println!("cargo:rustc-flags=-l tag_c -l tag -l z");    
 
     // create bindings for the static c library
-    // let heder = format!("{}/include/taglib/tag_c.h", dst.display());
     let header = dst.join("include").join("taglib").join("tag_c.h");
     let bindings = bindgen::Builder::default()
         // use the header from the dst, where cmake has writen the headers
