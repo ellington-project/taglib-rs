@@ -21,6 +21,7 @@ fn main() {
     // note, we want to do this to avoid linking in the system tag_c, which might not have bpm support
     println!("cargo:rustc-flags=-l dylib=stdc++");
     println!("cargo:rustc-flags=-l tag_c -l tag");
+    println!("cargo:rustc-flags=-l static=z");
 
     // create bindings for the static c library
     // let heder = format!("{}/include/taglib/tag_c.h", dst.display());
