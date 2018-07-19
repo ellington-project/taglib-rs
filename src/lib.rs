@@ -33,16 +33,16 @@ pub enum FileError {
 impl TagLibFile {
 
     /* Open a file with tag information */
-    pub fn new(filename: &PathBuf) -> Result<TagLibFile, FileError> {
+    pub fn new<P: Into<PathBuf>>(filename: P) -> Result<TagLibFile, FileError> {
         // get the filename as a string, then a c string
-        let str_filename = match filename.to_str() {
-            Some(s) => s,
-            None => return Err(FileError::PathAsString),
-        };
-        let cs_filename = match CString::new(str_filename) {
-            Ok(cs) => cs,
-            Err(ne) => return Err(FileError::NullPathString(ne)),
-        };
+        let cs_filename = filename
+            .into()
+            .to_str()
+            .ok_or(FileError::PathAsString)
+            .and_then(|filename| {
+                CString::new(filename).map_err(|err| FileError::NullPathString(err))
+            })?;
+
         unsafe {
             // start off by setting the string management options 
             // this does mean that we need to manually free all the strings that get returned to us, however.
@@ -179,59 +179,49 @@ impl TagLibTag {
         }
     }
 
-    pub fn set_title(self: &Self, title: &String) -> StringWriteError { 
+    pub fn set_title(self: &Self, title: &str) -> StringWriteError {
         unsafe {
-            let title_ptr : *const c_char = match CString::new(title.as_str()) {
-                Ok(cstr) => cstr.as_ptr(), 
-                Err(e) => return Err(e)
-            };
-            taglib_tag_set_title(self.tag, title_ptr);
+            CString::new(title).map(|cstr| {
+                let title_ptr = cstr.as_ptr();
+                taglib_tag_set_title(self.tag, title_ptr);
+            })
         }
-        Ok(())
     }
 
-    pub fn set_artist(self: &Self, artist: &String) -> StringWriteError { 
+    pub fn set_artist(self: &Self, artist: &str) -> StringWriteError {
         unsafe {
-            let artist_ptr : *const c_char = match CString::new(artist.as_str()) {
-                Ok(cstr) => cstr.as_ptr(), 
-                Err(e) => return Err(e)
-            };
-            taglib_tag_set_artist(self.tag, artist_ptr);
+            CString::new(artist).map(|cstr| {
+                let artist_ptr = cstr.as_ptr();
+                taglib_tag_set_artist(self.tag, artist_ptr);
+            })
         }
-        Ok(())
     }
 
-    pub fn set_album(self: &Self, album: &String) -> StringWriteError { 
+    pub fn set_album(self: &Self, album: &str) -> StringWriteError {
         unsafe {
-            let album_ptr : *const c_char = match CString::new(album.as_str()) {
-                Ok(cstr) => cstr.as_ptr(), 
-                Err(e) => return Err(e)
-            };
-            taglib_tag_set_album(self.tag, album_ptr);
+            CString::new(album).map(|cstr| {
+                let album_ptr = cstr.as_ptr();
+                taglib_tag_set_album(self.tag, album_ptr);
+            })
         }
-        Ok(())
     }
 
-    pub fn set_comment(self: &Self, comment: &String) -> StringWriteError { 
+    pub fn set_comment(self: &Self, comment: &str) -> StringWriteError {
         unsafe {
-            let comment_ptr : *const c_char = match CString::new(comment.as_str()) {
-                Ok(cstr) => cstr.as_ptr(), 
-                Err(e) => return Err(e)
-            };
-            taglib_tag_set_comment(self.tag, comment_ptr);
+            CString::new(comment).map(|cstr| {
+                let comment_ptr = cstr.as_ptr();
+                taglib_tag_set_comment(self.tag, comment_ptr);
+            })
         }
-        Ok(())
     }
 
-    pub fn set_genre(self: &Self, genre: &String) -> StringWriteError { 
+    pub fn set_genre(self: &Self, genre: &str) -> StringWriteError {
         unsafe {
-            let genre_ptr : *const c_char = match CString::new(genre.as_str()) {
-                Ok(cstr) => cstr.as_ptr(), 
-                Err(e) => return Err(e)
-            };
-            taglib_tag_set_genre(self.tag, genre_ptr);
+            CString::new(genre).map(|cstr| {
+                let genre_ptr = cstr.as_ptr();
+                taglib_tag_set_genre(self.tag, genre_ptr);
+            })
         }
-        Ok(())
     }
 
     pub fn set_year(self: &Self, year: u32) -> () { 
